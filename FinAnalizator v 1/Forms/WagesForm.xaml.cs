@@ -1,9 +1,6 @@
-﻿using FinAnalizator_v_1.src.Model;
-using FinAnalizator_v_1.src.Service.UI;
-using static FinAnalizator_v_1.src.Service.Validations.RecValid;
-using FinAnalizator_v_1.Pages;
+﻿using FinAnalizator_v_1.src.Service.UI;
 using System.Windows;
-using System.Threading.Tasks;
+using static FinAnalizator_v_1.src.Service.Validations.RecValid;
 
 namespace FinAnalizator_v_1.Forms
 {
@@ -14,10 +11,7 @@ namespace FinAnalizator_v_1.Forms
         public WagesForm()
         {
             InitializeComponent();
-           // Loaded += (s, e) => WagesText.Focus();
         }
-
-      
 
         private void CloseForm_Click(object sender, RoutedEventArgs e)
         {
@@ -34,7 +28,7 @@ namespace FinAnalizator_v_1.Forms
                 _dialogService.ShowError("Введите корректное число.");
                 return;
             }
-            
+
             ValidWages(amount);
             DialogResult = true;
             Close();

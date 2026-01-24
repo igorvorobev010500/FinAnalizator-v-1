@@ -1,10 +1,6 @@
-﻿using FinAnalizator_v_1.Forms;
-using FinAnalizator_v_1.src.Model;
-using FinAnalizator_v_1.src.Service.UI;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
+﻿using FinAnalizator_v_1.src.Model;
 
-namespace FinAnalizator_v_1.src.Service.Recomandations
+namespace FinAnalizator_v_1.src.Service.Recomandation
 {
     public class RecService
     {
@@ -26,7 +22,7 @@ namespace FinAnalizator_v_1.src.Service.Recomandations
         {
             var rec = new List<string>();
 
-            if(_expense.Count == 0)
+            if (_expense.Count == 0)
             {
                 rec.Add("Нет данных для анализа");
                 return rec;
@@ -74,11 +70,11 @@ namespace FinAnalizator_v_1.src.Service.Recomandations
 
 
             //анализ бюджета
-            if(remaining < 0)
+            if (remaining < 0)
             {
                 rec.Add($"Вы привысили расходы на {Math.Abs(remaining):C2} , сократите ваши расходы");
             }
-            else if(remaining < _wages * 0.1m)
+            else if (remaining < _wages * 0.1m)
             {
                 rec.Add($"Внимание!!! Осталось мало денег до конца недели");
             }
@@ -90,6 +86,7 @@ namespace FinAnalizator_v_1.src.Service.Recomandations
             //rec.Add("") отделяем в пустой строке 
             rec.Add("");
             rec.Add("Анализ по категориям");
+
 
         }
     }

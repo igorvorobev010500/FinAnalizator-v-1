@@ -15,7 +15,7 @@ namespace FinAnalizator_v_1.src.Model
         public string? Day { get;set; }
 
         [DisplayName("Сумма")]
-        public string? Expense { get; set; }
+        public decimal? Expense { get; set; }
 
         [DisplayName("Валюта")]
         public string? Value { get; set; }

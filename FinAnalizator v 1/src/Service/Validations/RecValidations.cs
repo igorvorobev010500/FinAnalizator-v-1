@@ -1,4 +1,5 @@
-﻿using FinAnalizator_v_1.src.Service.Recomandations;
+﻿using FinAnalizator_v_1.src.Model;
+using FinAnalizator_v_1.src.Service.Recomandation;
 using FinAnalizator_v_1.src.Service.UI;
 
 namespace FinAnalizator_v_1.src.Service.Validations
@@ -18,7 +19,7 @@ namespace FinAnalizator_v_1.src.Service.Validations
                     return;
                 }
 
-                var recService = new RecService(new List<Model.ExcelModel>(), wages);
+                var recService = new RecService(new List<ExcelModel>(), wages);
                 var recommendations = await recService.Recomandations();
 
             }
