@@ -35,33 +35,33 @@ namespace FinAnalizator_v_1.src.Service.Recomandation
 
         private async Task Calculation(List<string> rec)
         {
-            decimal totalExspense = 0;
-            decimal totalNeeds = 0;
-            decimal totalWishes = 0;
-            decimal totalSaving = 0;
-            decimal otherTotal = 0;
+            decimal? totalExspense = 0;
+            decimal? totalNeeds = 0;
+            decimal? totalWishes = 0;
+            decimal? totalSaving = 0;
+            decimal? otherTotal = 0;
 
-            foreach (var Expense in _expense)
+            foreach (var expens in _expense)
             {
-                totalExspense += _wages;
+                totalExspense += expens.Expense;
 
-                switch (Expense.Category)
+                switch (expens.Category)
                 {
                     case Categories.нужды:
-                        totalNeeds += _wages;
+                        totalNeeds += expens.Expense;
                         break;
                     case Categories.желания:
-                        totalWishes += _wages;
+                        totalWishes += expens.Expense;
                         break;
                     case Categories.сбережения:
-                        totalSaving += _wages;
+                        totalSaving += expens.Expense;
                         break;
                     default:
-                        otherTotal += _wages;
+                        otherTotal += expens.Expense;
                         break;
                 }
             }
-            decimal remaining = _wages - totalExspense;
+            decimal? remaining = _wages - totalExspense;
 
             rec.Add($"Ваша недельная зп {_wages:C2}");
             rec.Add($"Ваши расходы за неделю {totalExspense:C2}");
@@ -72,7 +72,7 @@ namespace FinAnalizator_v_1.src.Service.Recomandation
             //анализ бюджета
             if (remaining < 0)
             {
-                rec.Add($"Вы привысили расходы на {Math.Abs(remaining):C2} , сократите ваши расходы");
+                rec.Add($"Вы привысили расходы на {Math.Abs((decimal)remaining):C2} , сократите ваши расходы");
             }
             else if (remaining < _wages * 0.1m)
             {
@@ -83,6 +83,7 @@ namespace FinAnalizator_v_1.src.Service.Recomandation
                 rec.Add($"Ваш бюджет в порядке");
             }
 
+            
             //rec.Add("") отделяем в пустой строке 
             rec.Add("");
             rec.Add("Анализ по категориям");
