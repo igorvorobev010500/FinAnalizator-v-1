@@ -9,6 +9,7 @@ namespace FinAnalizator_v_1.src.Service.Validations
 
         private static readonly _IDialog _IDialog = new DialogService();
 
+
         public static async Task ValidWages(decimal wages)
         {
             try
@@ -23,6 +24,9 @@ namespace FinAnalizator_v_1.src.Service.Validations
 
                 var recService = new RecService(expens, wages);
                 var recommendations = await recService.Recomandations();
+
+                //Fix проблема с вызовом - Для нестатического поля, метода или свойства "NavigationService.Navigate(object)" требуется ссылка на объект.
+                //NavigationService.Navigate(new Rec(recommendations));
 
             }
             catch (FormatException)
