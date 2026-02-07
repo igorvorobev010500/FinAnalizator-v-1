@@ -1,13 +1,16 @@
-﻿using FinAnalizator_v_1.src.Model;
-using FinAnalizator_v_1.src.Service.Categorization;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using System.IO;
+using FinAnalizator_v_1.src.Model;
+using FinAnalizator_v_1.src.Service.UI;
+using static FinAnalizator_v_1.src.Service.Categorization.CategoryService;
 
 namespace FinAnalizator_v_1.src.Service.Parsing
 {
-
     public class ExcelParser
     {
+
+        private static readonly _IDialog _IDialog = new DialogService();
+
         public static async Task<List<ExcelModel>> ParseExcel(string filePath)
         {
             ExcelPackage.License.SetNonCommercialPersonal("FinAnalizator User");
@@ -33,18 +36,26 @@ namespace FinAnalizator_v_1.src.Service.Parsing
                     {
                         var (amount, description) = DataParser.SeparateString(expenseText);
 
-                        expenses.Add(new ExcelModel
+                        //добавляем обработку ошибок ес convert.todecimal выкинет исключение
+                        try
                         {
-                            Day = day,
-                            Expense = amount,
-                            ExpenseInfo = description,
-                            Value = "рублей",
-                            Category = CategoryService.CategoryDefinition(description)
-                        });
+                            expenses.Add(new ExcelModel
+                            {
+                                Day = day,
+                                Expense = Convert.ToDecimal(DataParser.NormalizeCurrency(amount)),
+                                ExpenseInfo = description,
+                                Value = "рублей",
+                                Category = CategoryDefinition(description)
+                            });
+                        }
+                        catch (FormatException)
+                        {
+                            _IDialog.ShowError(amount + " - неверный формат числа. Проверьте файл и попробуйте снова.");
+                        }
+
                     }
                 }
             }
-
             return expenses;
         }
     }

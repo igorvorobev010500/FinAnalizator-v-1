@@ -1,4 +1,5 @@
-﻿using FinAnalizator_v_1.src.Service.Recomandations;
+﻿using FinAnalizator_v_1.src.Service.Data;
+using FinAnalizator_v_1.src.Service.Recomandation;
 using FinAnalizator_v_1.src.Service.UI;
 
 namespace FinAnalizator_v_1.src.Service.Validations
@@ -7,6 +8,7 @@ namespace FinAnalizator_v_1.src.Service.Validations
     {
 
         private static readonly _IDialog _IDialog = new DialogService();
+
 
         public static async Task ValidWages(decimal wages)
         {
@@ -18,8 +20,13 @@ namespace FinAnalizator_v_1.src.Service.Validations
                     return;
                 }
 
-                var recService = new RecService(new List<Model.ExcelModel>(), wages);
+                var expens = DataService.ExpensesData;
+
+                var recService = new RecService(expens, wages);
                 var recommendations = await recService.Recomandations();
+
+                //Fix проблема с вызовом - Для нестатического поля, метода или свойства "NavigationService.Navigate(object)" требуется ссылка на объект.
+                //NavigationService.Navigate(new Rec(recommendations));
 
             }
             catch (FormatException)
