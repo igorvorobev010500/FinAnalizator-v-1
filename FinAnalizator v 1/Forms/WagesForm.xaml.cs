@@ -13,7 +13,7 @@ namespace FinAnalizator_v_1.Forms
             InitializeComponent();
         }
 
-        private void CloseForm_Click(object sender, RoutedEventArgs e)
+        private async void CloseForm_Click(object sender, RoutedEventArgs e)
         {
             string input = WagesText.Text.Trim();
 
@@ -29,7 +29,9 @@ namespace FinAnalizator_v_1.Forms
                 return;
             }
 
-            ValidWages(amount);
+            System.Diagnostics.Debug.WriteLine($"[WagesForm] Calling ValidWages with amount: {amount}");
+            await ValidWages(amount);
+            System.Diagnostics.Debug.WriteLine($"[WagesForm] ValidWages completed");
             DialogResult = true;
             Close();
         }

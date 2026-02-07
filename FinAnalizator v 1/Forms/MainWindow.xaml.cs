@@ -1,5 +1,6 @@
 ﻿using ModernWpf.Controls;
 using System.Windows;
+using FinAnalizator_v_1.src.Service.Validations;
 
 
 namespace FinAnalizator_v_1
@@ -9,6 +10,7 @@ namespace FinAnalizator_v_1
         public MainWindow()
         {
             InitializeComponent();
+            RecValid.SetContentFrame(ContentFrame);
             if (NavView.MenuItems.Count > 0)
             {
                 NavView.SelectedItem = NavView.MenuItems[0];
@@ -24,15 +26,15 @@ namespace FinAnalizator_v_1
             {
                 case "upload":
                     ContentFrame.Content = new Pages.UploadFile();
+                    RecValid.ResetRecPageFlag();
                     break;
                 case "expenses":
                     ContentFrame.Content = new Pages.Expenses();
+                    RecValid.ResetRecPageFlag();
                     break;
                 case "rec":
-                    ContentFrame.Content = new Pages.Rec();
-                    break;
-                case "settings":
-                    ContentFrame.Content = new Pages.Settings();
+                    var wagesForm = new Forms.WagesForm();
+                    wagesForm.ShowDialog();
                     break;
                 default:
                     break;

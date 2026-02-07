@@ -2,44 +2,60 @@
 using FinAnalizator_v_1.src.Service.UI;
 using OfficeOpenXml.LoadFunctions.Params;
 using System.Windows.Controls;
+using System.Text;
 
 namespace FinAnalizator_v_1.Pages
 {
     public partial class Rec : UserControl
     {
         private static readonly _IDialog _IDialog = new DialogService();
-        public List<string> Recommendations { get; }
+        public List<string> Recommendations { get; set; }
 
         //конструктор по умолчанию при нажатии на вкладку
         public Rec()
         {
             InitializeComponent();
-            CheckWages();
+
         }
 
         //конструктор для передачи рекомендаций
         public Rec(List<string> recommendations)
         {
+
+            InitializeComponent();
+
             Recommendations = recommendations;
-            LoadData();
+
+            Dispatcher.BeginInvoke(() => LoadData());
         }
 
         public static async Task CheckWages()
         {
-            //открытие окна для заполнения зп
             var wagesForm = new WagesForm();
             wagesForm.ShowDialog();
         }
 
         private void LoadData()
         {
+            if (recommendationsBlock == null)
+            {
+                return;
+            }
+
             if (Recommendations != null && Recommendations.Count > 0)
             {
-                //RecommendationsListBox.ItemsSource = Recommendations;
+                var sb = new System.Text.StringBuilder();
+                foreach (var rec in Recommendations)
+                {
+                    sb.AppendLine(rec);
+                }
+
+                var recommendationsText = sb.ToString();
+                recommendationsBlock.Text = recommendationsText;
             }
             else
             {
-                _IDialog.ShowInfo("Рекомендации не были загруженны, возможны проблемы с отображением");
+                recommendationsBlock.Text = "Рекомендации отсутствуют";
             }
         }
     }

@@ -158,7 +158,6 @@ namespace FinAnalizator_v_1.src.Service.Recomandation
             rec.Add($"Общая статистика:");
             rec.Add($"• Всего записей расходов: {_expense.Count}");
             rec.Add($"• Средний расход в день: {(totalExspense / 7):C2}");
-            rec.Add($"• Дней до следующей зарплаты: {(_wages / (totalExspense > 0 ? totalExspense / 7 : 1)):F1}");
         }
 
         // Метод для подсчета процентов
